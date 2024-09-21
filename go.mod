@@ -1,4 +1,5 @@
-module car_rent
+// module car_rent
+module Car_Rent_Backend
 
 go 1.23.1
 

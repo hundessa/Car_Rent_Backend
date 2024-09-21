@@ -1,16 +1,22 @@
 package main
 
 import (
-	"car_rent/internal/server"
+	"Car_Rent_Backend/internal/routes"
+	// "Car_Rent_Backend/internal/server"
 	"fmt"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
-	server := server.NewServer()
+	// server := server.NewServer()
+	r := gin.Default()
 
-	err := server.ListenAndServe()
-	if err != nil {
+    routes.Routes(r) 
+
+	// err := server.ListenAndServe()
+	if err := r.Run(":8080"); err != nil {
 		panic(fmt.Sprintf("cannot start server: %s", err))
 	}
 }
