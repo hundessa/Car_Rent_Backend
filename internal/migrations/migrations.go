@@ -2,6 +2,7 @@ package migrations
 
 import (
 	"Car_Rent_Backend/internal/helpers"
+	"Car_Rent_Backend/internal/models"
 	"fmt"
 	"os"
 
@@ -10,23 +11,12 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type User struct {
-	gorm.Model
-	FirstName string
-	LastName string
-	Email string
-	Password string
-}
-
 
 func ConnectDB() *gorm.DB {
-	err := godotenv.Load()
-    if err != nil {
-        fmt.Println("Error loading .env file:", err) // Print error if .env file is not loaded
-		return nil // Return nil if the DB connection cannot be established
-	} else {
-        fmt.Println(".env file loaded successfully")
-    }
+
+
+	// godotenv.Load("/home/hundessa/Car_Rent_Backend/.env")
+	godotenv.Load(".env")
 
 	database   := os.Getenv("DB_DATABASE")
 	password   := os.Getenv("DB_PASSWORD")
@@ -35,13 +25,6 @@ func ConnectDB() *gorm.DB {
 	host       := os.Getenv("DB_HOST")
 
 
-	// Debugging output after loading environment variables
-fmt.Printf("Host: %s\n", os.Getenv("DB_HOST"))
-fmt.Printf("Port: %s\n", os.Getenv("DB_PORT"))
-fmt.Printf("Username: %s\n", os.Getenv("DB_USERNAME"))
-fmt.Printf("Password: %s\n", os.Getenv("DB_PASSWORD"))
-fmt.Printf("Database: %s\n", os.Getenv("DB_DATABASE"))
-
  // Ensure the variables are not empty
  if host == "" || port == "" || username == "" || password == "" || database == "" {
 	fmt.Println("Some environment variables are missing or empty.")
@@ -49,11 +32,21 @@ fmt.Printf("Database: %s\n", os.Getenv("DB_DATABASE"))
 }
 
 	connection := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable TimeZone=UTC",
 		host, port, username, password, database)
+
 		db, err := gorm.Open(postgres.Open(connection), &gorm.Config{})
 	if err != nil {
 		helpers.HandleError(err)
 	}
+
+	// AutoMigrate to create the User table
+	// db.AutoMigrate(&models.User{})
+	// db.AutoMigrate(&models.Cars{})
+
+	if err := db.AutoMigrate(&models.User{}, &models.Cars{}); err != nil {
+		fmt.Println("Migration error: ", err)
+	}
+	
 	return db
 }

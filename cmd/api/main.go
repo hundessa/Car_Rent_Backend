@@ -25,10 +25,12 @@ func main() {
 	// server := server.NewServer()
 	r := gin.Default()
 
-    routes.Routes(r) 
+    routes.UserRoutes(r) 
+	routes.CarRoutes(r)
 
 	// err := server.ListenAndServe()
 	if err := r.Run(":8080"); err != nil {
 		panic(fmt.Sprintf("cannot start server: %s", err))
 	}
+
 }

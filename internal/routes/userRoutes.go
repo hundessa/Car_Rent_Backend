@@ -5,6 +5,6 @@ import (
 	"Car_Rent_Backend/internal/controllers"
 )
 
-func Routes(r *gin.Engine) {
+func UserRoutes(r *gin.Engine) {
 	r.POST("/sign-up", controllers.SignUpHandler)
 }
