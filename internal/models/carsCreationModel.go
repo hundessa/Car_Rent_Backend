@@ -13,7 +13,7 @@ type Cars struct {
 	CarProductionYear string `json:"carproductionyear" validate:"required" gorm:"uniqueIndex"`
 	CarMileage string `json:"carmileage" validate:"required" gorm:"uniqueIndex"`
 	Description string `json:"description" validate:"required" gorm:"uniqueIndex"`
-	CarImage string `json:"carimage" validate:"required" gorm:"uniqueIndex"`
+	CarImage string `json:"carimage" validate:"" gorm:"uniqueIndex"`
 	CarPrice string `json:"carprice" validate:"required" gorm:"uniqueIndex"`
 	CarRating string `json:"carrating" validate:"required" gorm:"uniqueIndex"`
 }
