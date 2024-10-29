@@ -15,8 +15,7 @@ import (
 func ConnectDB() *gorm.DB {
 
 
-	godotenv.Load("/home/hundessa/Car_Rent_Backend/.env")
-	// godotenv.Load(".env")
+	godotenv.Load(".env")
 
 	database   := os.Getenv("DB_DATABASE")
 	password   := os.Getenv("DB_PASSWORD")
