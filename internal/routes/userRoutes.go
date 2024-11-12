@@ -1,10 +1,16 @@
 package routes
 
 import (
-    "github.com/gin-gonic/gin"
 	"Car_Rent_Backend/internal/controllers"
+
+	"github.com/gin-gonic/gin"
 )
 
 func UserRoutes(r *gin.Engine) {
-	r.POST("/sign-up", controllers.SignUpHandler)
+	// Group routes under /user for organization
+	user := r.Group("/user")
+	{
+		user.POST("/sign-up", controllers.SignUpHandler)
+		user.POST("/sign-in", controllers.SigninHandler)
+	}
 }
